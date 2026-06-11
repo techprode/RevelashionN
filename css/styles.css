@@ -412,6 +412,47 @@ a.menu__produit:hover { box-shadow: 0 6px 20px rgb(0 0 0 / .08); }
   }
   .menu.est-ouvert { clip-path: inset(0 0 0 0); }
 
+  /* Mobile menu header and quick links */
+  .menu__mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 6px;
+    border-bottom: 1px solid var(--gris-ligne);
+    position: sticky;
+    top: 0;
+    background: var(--creme);
+    z-index: 60;
+  }
+  .menu__mobile-logo { font-weight: 700; font-size: 20px; text-transform: lowercase; }
+  .menu__mobile-actions { display: flex; align-items: center; gap: 10px; }
+  .menu__mobile-actions a.label { font-size: 12px; padding: 6px 8px; }
+  .menu__close {
+    display: inline-grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: transparent;
+    font-size: 20px;
+  }
+
+  .menu__mobile-quick {
+    display: grid;
+    gap: 8px;
+    padding: 12px 6px 18px;
+  }
+  .menu__quick-link {
+    display: block;
+    padding: 12px 14px;
+    background: var(--blanc);
+    border-radius: 12px;
+    font-weight: 700;
+    color: var(--noir);
+    box-shadow: 0 6px 18px rgb(0 0 0 / .06);
+  }
+
   /* Onglets plus grands, réf. frame menu */
   .menu__onglet { font-size: 14px; letter-spacing: .06em; }
   .menu__onglets { gap: 24px; }

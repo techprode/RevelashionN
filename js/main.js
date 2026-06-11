@@ -103,6 +103,10 @@ function initMegaMenu() {
     });
   });
   addEventListener("resize", positionnerSouligne);
+
+  // mobile menu close buttons (inside menu markup)
+  const closeButtons = menu.querySelectorAll("[data-menu-close]");
+  closeButtons.forEach((btn) => btn.addEventListener("click", () => ouvrir(false)));
 }
 
 // ------------------------------------------------------------

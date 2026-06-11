@@ -55,6 +55,21 @@
     </header>
     <!-- ===== Méga-menu : produits affichés directement ===== -->
     <div class="menu" data-menu hidden>
+      <!-- Mobile header inside menu for quick actions and close -->
+      <div class="menu__mobile-header">
+        <a class="menu__mobile-logo" href="index.html">revelashion</a>
+        <div class="menu__mobile-actions">
+          <a class="label" href="#abonnement">Abonnement</a>
+          <a class="label" href="#club">Rejoindre le club</a>
+          <button class="menu__close" aria-label="Fermer le menu" data-menu-close>✕</button>
+        </div>
+      </div>
+      <div class="menu__mobile-quick">
+        <a href="#abonnement" class="menu__quick-link">Abonnement</a>
+        <a href="#club" class="menu__quick-link">Rejoindre le Reveal Club™</a>
+        <a href="#compte" class="menu__quick-link">Compte</a>
+        <a href="#panier" class="menu__quick-link">Panier</a>
+      </div>
       <div class="menu__onglets" role="tablist" aria-label="Catégories">
         <button class="menu__onglet label est-actif" data-onglet="salt" role="tab" aria-selected="true">Salt '26</button>
         <button class="menu__onglet label" data-onglet="ready" role="tab" aria-selected="false">Reveal Ready™</button>
