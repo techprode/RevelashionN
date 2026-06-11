@@ -1,30 +1,31 @@
 /* ============================================================
    REVELASHION™ — styles.css
    Design tokens → base → composants → sections
-   Palette : blanc / noir / surpiqûre verte
+   D.A. : crème / noir / marron — réf. mockup-image/ (style rhode)
    ============================================================ */
 
 /* ---------- 1. Tokens ---------- */
 :root {
-  --blanc: #FFFFFF;
-  --noir: #0C0C0C;
-  --gris-carte: #F5F5F3;
-  --gris-ligne: #E5E5E1;
-  --gris-texte: #6B6B66;
-  --vert: #1B4D3E;          /* surpiqûre signature */
-  --vert-voile: #EAF2ED;    /* fond CTA achat */
+  --creme: #F5F4EF;          /* fond page */
+  --creme-2: #EDEBE4;        /* surfaces secondaires */
+  --blanc: #FFFFFF;          /* cards sur crème */
+  --noir: #141414;
+  --gris-carte: #F0EFEA;     /* tuiles produits */
+  --gris-ligne: #DDDBD3;
+  --gris-texte: #6F6E69;
+  --brun: #6B4226;           /* logo géant footer, accents */
+  --rose-voile: #F3DCDF;     /* CTA achat (fiche produit) */
 
-  --font-base: 'Inter', Helvetica, Arial, sans-serif;
-  --font-display: 'Michroma', 'Courier New', monospace;
+  --font-base: 'Instrument Sans', Helvetica, Arial, sans-serif;
 
-  --radius-carte: 16px;
+  --radius-carte: 10px;
   --transition: 0.25s cubic-bezier(.4, 0, .2, 1);
   --conteneur: 1440px;
 }
 
 /* ---------- 2. Reset ---------- */
 * { box-sizing: border-box; margin: 0; }
-img, svg { display: block; max-width: 100%; }
+img, svg, video { display: block; max-width: 100%; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
 a { color: inherit; text-decoration: none; }
 input { font: inherit; }
@@ -36,7 +37,7 @@ html { scroll-behavior: smooth; }
 body {
   font-family: var(--font-base);
   color: var(--noir);
-  background: var(--blanc);
+  background: var(--creme);
   font-size: 15px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -52,7 +53,13 @@ body.menu-ouvert { overflow: hidden; }
   text-transform: uppercase;
   font-weight: 600;
 }
-.mot-display { font-family: var(--font-display); text-transform: lowercase; font-weight: 400; }
+/* Titres lowercase bold façon mockup (« highlight », « bronze ») */
+.mot-display {
+  font-weight: 700;
+  text-transform: lowercase;
+  letter-spacing: -.03em;
+  line-height: .95;
+}
 
 /* Grain photo (placeholders shooting) */
 .grain { position: relative; }
@@ -61,104 +68,111 @@ body.menu-ouvert { overflow: hidden; }
   position: absolute;
   inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
-  opacity: .16;
+  opacity: .14;
   mix-blend-mode: overlay;
   pointer-events: none;
 }
 
-/* ---------- 5. Boutons ---------- */
+/* Apparitions au scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .7s ease-out, transform .7s ease-out;
+}
+.reveal.est-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ---------- 5. Boutons (pill, réf. mockups) ---------- */
 .btn {
-  position: relative;
   display: inline-block;
   border: 1px solid var(--noir);
   border-radius: 999px;
-  padding: 14px 28px;
-  font-size: 12px;
+  padding: 13px 26px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: .08em;
+  letter-spacing: .12em;
   text-transform: uppercase;
   text-align: center;
-  transition: background var(--transition), color var(--transition), border-color var(--transition);
+  background: transparent;
+  transition: background var(--transition), color var(--transition), border-color var(--transition), transform var(--transition);
 }
 .btn:hover { background: var(--noir); color: var(--blanc); }
-/* Surpiqûre verte au survol */
-.btn::after {
-  content: "";
-  position: absolute;
-  inset: -5px;
-  border: 1.5px dashed var(--vert);
-  border-radius: 999px;
-  opacity: 0;
-  transition: opacity var(--transition);
-  pointer-events: none;
+.btn:active { transform: scale(.97); }
+
+/* Pill blanc plein — « EXPLORE NOW » sur photo */
+.btn--plein {
+  background: var(--blanc);
+  border-color: var(--blanc);
+  color: var(--noir);
 }
-.btn:hover::after { opacity: 1; }
+.btn--plein:hover { background: var(--noir); border-color: var(--noir); color: var(--blanc); }
 
-.btn--plein { background: var(--noir); color: var(--blanc); }
-.btn--plein:hover { background: var(--vert); border-color: var(--vert); }
-
+/* Pill outline blanc — « EXCLUSIVE TO… » sur photo */
 .btn--blanc { border-color: var(--blanc); color: var(--blanc); }
 .btn--blanc:hover { background: var(--blanc); color: var(--noir); }
-.btn--blanc::after { border-color: rgb(255 255 255 / .75); }
 
+/* CTA achat rose pâle — fiche produit */
 .btn--achat {
-  background: var(--vert-voile);
+  background: var(--rose-voile);
   border-color: transparent;
   color: var(--noir);
   width: 100%;
-  font-size: 13px;
-  padding: 18px 28px;
+  font-size: 12px;
+  padding: 17px 28px;
 }
-.btn--achat:hover { background: var(--vert); color: var(--blanc); }
+.btn--achat:hover { background: var(--noir); color: var(--blanc); }
 
-/* ---------- 6. Badges ---------- */
+/* ---------- 6. Badges (pill noir lowercase, réf. mockups) ---------- */
 .badge {
-  font-family: var(--font-display);
-  font-size: 10px;
+  font-size: 11px;
+  font-weight: 600;
   background: var(--noir);
-  color: var(--blanc);
-  padding: 6px 12px;
+  color: var(--creme);
+  padding: 4px 12px;
   border-radius: 999px;
   text-transform: lowercase;
+  letter-spacing: .02em;
   white-space: nowrap;
 }
-.badge--vert { background: var(--vert); }
+.badge--brun { background: var(--brun); }
 
 /* ---------- 7. Pastilles Hair Match™ ---------- */
 .pastille {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  border: 2px solid var(--blanc);
+  border: 2px solid var(--creme);
   outline: 1px solid var(--gris-ligne);
   outline-offset: 2px;
   padding: 0;
   flex: none;
   transition: outline-color var(--transition);
 }
-.pastille.est-active { outline: 2px solid var(--vert); }
+.pastille.est-active { outline: 1.5px solid var(--noir); }
 .pastille--black  { background: #1A1A1A; }
 .pastille--brown  { background: #5C4332; }
 .pastille--blonde { background: #C9A66B; }
 .pastille--copper { background: #A65A33; }
 
 /* ---------- 8. Accessibilité ---------- */
-:focus-visible { outline: 2px solid var(--vert); outline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--noir); outline-offset: 3px; }
 
 /* ============================================================
-   BARRE D'ANNONCE (marquee)
+   BARRE D'ANNONCE (marquee) — bandeau noir, réf. mockup mobile
    ============================================================ */
 .annonce {
   display: flex;
   align-items: center;
-  height: 36px;
-  background: var(--gris-carte);
+  height: 34px;
+  background: var(--noir);
+  color: var(--creme);
   overflow: hidden;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: .1em;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: .14em;
   text-transform: uppercase;
-  color: #4A4A45;
 }
 .annonce__piste {
   display: flex;
@@ -171,10 +185,10 @@ body.menu-ouvert { overflow: hidden; }
 .annonce__pause {
   flex: none;
   width: 44px;
-  height: 36px;
-  font-size: 12px;
-  background: var(--gris-carte);
-  box-shadow: -16px 0 12px var(--gris-carte);
+  height: 34px;
+  font-size: 11px;
+  background: var(--noir);
+  box-shadow: -16px 0 12px var(--noir);
 }
 
 /* ============================================================
@@ -187,8 +201,8 @@ body.menu-ouvert { overflow: hidden; }
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: 16px clamp(16px, 3vw, 40px);
-  background: var(--blanc);
+  padding: 18px clamp(16px, 3vw, 40px);
+  background: var(--creme);
   transition: box-shadow var(--transition);
 }
 .entete.est-scrolle .header { box-shadow: 0 1px 0 var(--gris-ligne); }
@@ -198,23 +212,17 @@ body.menu-ouvert { overflow: hidden; }
 .header__lien {
   position: relative;
   padding: 4px 0;
-  transition: color var(--transition);
+  font-weight: 500;
+  transition: opacity var(--transition);
 }
-.header__lien:hover { color: var(--vert); }
-.header__lien::after {
-  content: "";
-  position: absolute;
-  left: 0; right: 100%;
-  bottom: -2px;
-  border-bottom: 1.5px dashed var(--vert);
-  transition: right var(--transition);
-}
-.header__lien:hover::after { right: 0; }
+.header__lien:hover { opacity: .55; }
 
+/* Logotype lowercase bold, réf. wordmark mockup */
 .header__logo {
   font-weight: 700;
-  font-size: 28px;
-  letter-spacing: -.03em;
+  font-size: 30px;
+  letter-spacing: -.045em;
+  text-transform: lowercase;
   line-height: 1;
   padding-bottom: 4px;
 }
@@ -244,6 +252,594 @@ body.menu-ouvert { overflow: hidden; }
   .header__nav--gauche { display: none; }
   .header__burger { display: block; }
   .header__lien--compte { display: none; }
-  .header__logo { justify-self: center; font-size: 24px; }
+  .header__logo { justify-self: center; font-size: 26px; }
   .header__nav--droite { gap: 16px; }
+}
+
+/* ============================================================
+   MÉGA-MENU — liste produits, réf. mockup menu mobile
+   ============================================================ */
+.menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 49;
+  background: var(--creme);
+  border-top: 1px solid var(--gris-ligne);
+  padding: 26px clamp(16px, 3vw, 40px) 34px;
+  transform: translateY(-12px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .25s ease-out, opacity .25s ease-out;
+}
+.menu.est-ouvert { transform: none; opacity: 1; pointer-events: auto; }
+
+.menu-voile {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgb(0 0 0 / .18);
+  opacity: 0;
+  transition: opacity .25s;
+}
+
+/* Onglets — souligné plein sous l'actif, réf. mockup */
+.menu__onglets {
+  position: relative;
+  display: flex;
+  gap: 28px;
+  margin-bottom: 22px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.menu__onglet {
+  padding: 0 0 10px;
+  color: var(--gris-texte);
+  white-space: nowrap;
+  transition: color var(--transition);
+}
+.menu__onglet:hover { color: var(--noir); }
+.menu__onglet.est-actif { color: var(--noir); }
+.menu__souligne {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  border-bottom: 1.5px solid var(--noir);
+  transition: left .25s cubic-bezier(.4,0,.2,1), width .25s cubic-bezier(.4,0,.2,1);
+}
+
+/* Panneaux produits — cards blanches arrondies sur crème */
+.menu__panneau {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  animation: panneau-apparait .2s ease-out;
+}
+.menu__panneau[hidden] { display: none; }
+@keyframes panneau-apparait { from { opacity: 0; transform: translateY(6px); } }
+
+.menu__produit {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--blanc);
+  border-radius: var(--radius-carte);
+  padding: 14px;
+  transform: translateY(8px);
+  opacity: 0;
+  transition: transform .3s ease-out, opacity .3s ease-out, box-shadow var(--transition);
+}
+.menu.est-ouvert .menu__produit { transform: none; opacity: 1; }
+.menu__produit:nth-child(2) { transition-delay: 60ms; }
+.menu__produit:nth-child(3) { transition-delay: 120ms; }
+.menu__produit:nth-child(4) { transition-delay: 180ms; }
+.menu__produit:nth-child(5) { transition-delay: 240ms; }
+.menu__produit:nth-child(6) { transition-delay: 300ms; }
+a.menu__produit:hover { box-shadow: 0 6px 20px rgb(0 0 0 / .08); }
+
+.menu__produit--teaser { pointer-events: none; }
+.menu.est-ouvert .menu__produit--teaser { opacity: .55; }
+
+.menu__vignette {
+  flex: none;
+  width: 54px;
+  height: 54px;
+  border-radius: 8px;
+}
+.menu__vignette { background-position: center; background-size: cover; }
+.menu__vignette--aftersun  { background-image: url("../public/assets/images/salt-aftersun.png"); }
+.menu__vignette--wetlift   { background-image: url("../public/assets/images/salt-wetlift.png"); }
+.menu__vignette--primer    { background-image: url("../public/assets/images/primer-packshot.png"); }
+.menu__vignette--saltkit   { background-image: url("../public/assets/aftersun-video.png"); }
+.menu__vignette--sport     { background-image: url("../public/assets/assets/pilates.jpg"); }
+.menu__vignette--focus     { background-image: url("../public/assets/assets/entrepreneur.jpg"); }
+.menu__vignette--modulash  { background-image: url("../public/assets/images/build-serum.png"); }
+
+.menu__infos { display: grid; gap: 2px; min-width: 0; }
+.menu__infos strong { font-size: 13px; letter-spacing: .06em; text-transform: uppercase; }
+.menu__infos small { font-size: 12.5px; color: var(--gris-texte); }
+.menu__produit .badge { margin-left: auto; }
+
+.menu__concept {
+  grid-column: 1 / -1;
+  font-size: 18px;
+  padding: 2px 2px 6px;
+}
+.menu__concept em { color: var(--brun); font-style: italic; }
+
+.menu__cta { display: block; width: max-content; margin: 26px auto 0; }
+
+/* Méga-menu : mobile = overlay plein écran */
+@media (max-width: 1079px) {
+  .menu {
+    /* plein écran sous l'entête, réf. mockup menu mobile */
+    height: calc(100dvh - 100px);
+    overflow-y: auto;
+    padding-bottom: 80px;
+    border-top: none;
+    box-shadow: 0 1px 0 var(--gris-ligne) inset;
+  }
+  .menu__panneau { grid-template-columns: 1fr; }
+  .menu__cta { width: 100%; }
+}
+
+/* ============================================================
+   HERO plein écran — réf. desktop-hero-summer26-retroviseur
+   ============================================================ */
+.hero {
+  position: relative;
+  height: calc(100svh - 34px - 68px);   /* viewport - annonce - header */
+  min-height: 520px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--noir);
+  color: var(--blanc);
+}
+.hero__visuel {
+  position: absolute;
+  inset: 0;
+  /* campagne Salt Series™ + voile sombre pour la lisibilité du titre */
+  background:
+    linear-gradient(185deg, rgb(0 0 0 / .12) 40%, rgb(0 0 0 / .58) 88%),
+    url("../public/assets/aftersun-hero.png") center 32% / cover no-repeat,
+    var(--noir);
+  animation: hero-zoom 14s ease-out forwards;
+  transform-origin: 60% 40%;
+}
+@keyframes hero-zoom { from { transform: scale(1.08); } to { transform: scale(1); } }
+
+.hero__contenu {
+  position: relative;
+  z-index: 1;
+  padding: clamp(24px, 4vw, 56px);
+  display: grid;
+  justify-items: start;
+  gap: 14px;
+}
+.hero__titre {
+  font-size: clamp(26px, 3.2vw, 44px);
+  font-weight: 500;
+  letter-spacing: -.02em;
+  line-height: 1.15;
+  max-width: 14em;
+}
+.hero__date { color: rgb(255 255 255 / .7); font-weight: 500; }
+
+/* Entrée en cascade au chargement */
+.hero__titre, .hero__date, .hero__cta {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: hero-entre .8s ease-out forwards;
+}
+.hero__date { animation-delay: .15s; }
+.hero__cta  { animation-delay: .3s; }
+@keyframes hero-entre { to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__visuel, .hero__titre, .hero__date, .hero__cta { animation: none; opacity: 1; transform: none; }
+}
+
+/* ============================================================
+   VITRINE — 3 cards produits, réf. desktop-cards-highlight-bronze-tint
+   ============================================================ */
+.vitrine { padding: 12px clamp(12px, 1.5vw, 20px) clamp(40px, 5vw, 72px); }
+.vitrine__grille {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(12px, 1.5vw, 20px);
+}
+
+.carte { display: grid; gap: 14px; }
+.carte__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-carte);
+  overflow: hidden;
+  background: var(--gris-carte);
+}
+
+/* Gros mot lowercase en haut à gauche */
+.carte__mot {
+  position: absolute;
+  top: 20px;
+  left: 22px;
+  z-index: 2;
+  font-size: clamp(28px, 2.8vw, 42px);
+}
+.carte__mot--blanc { color: var(--blanc); }
+.carte__badge { position: absolute; top: 22px; right: 20px; z-index: 2; }
+
+/* Photo produit pleine carte + zoom lent au survol */
+.carte__photo {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  transition: transform .6s cubic-bezier(.4,0,.2,1);
+}
+.carte__media:hover .carte__photo { transform: scale(1.045); }
+.carte__photo--aftersun {
+  background-image:
+    linear-gradient(180deg, rgb(0 0 0 / .18), rgb(0 0 0 / 0) 38%),
+    url("../public/assets/images/salt-aftersun.png");
+}
+.carte__photo--wetlift {
+  background-image:
+    linear-gradient(180deg, rgb(0 0 0 / .22), rgb(0 0 0 / 0) 40%),
+    url("../public/assets/images/hero.png");
+  background-position: 62% center;
+}
+.carte__photo--primer {
+  background-image: url("../public/assets/images/primer-packshot.png");
+}
+
+/* Pastille « swipe » flottante */
+.carte__swipe {
+  position: absolute;
+  top: 50%;
+  right: 14%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgb(245 244 239 / .85);
+  backdrop-filter: blur(4px);
+  color: var(--noir);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: lowercase;
+  animation: flotte 3.2s ease-in-out infinite;
+}
+@keyframes flotte {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* CTA pill posé en bas de la carte photo */
+.carte__cta {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  z-index: 2;
+  translate: -50%;
+  white-space: nowrap;
+}
+
+/* Infos sous la carte */
+.carte__infos { display: grid; gap: 3px; padding-inline: 6px; }
+.carte__ligne {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 13.5px;
+  letter-spacing: .05em;
+}
+.carte__prix { font-weight: 500; }
+.carte__sous { font-size: 13px; color: var(--gris-texte); }
+.carte__pastilles { display: flex; gap: 10px; padding-top: 10px; }
+.carte__pastilles .pastille { width: 18px; height: 18px; outline-offset: 1.5px; }
+
+/* Mobile : carrousel scroll-snap, réf. mockup mobile */
+@media (max-width: 860px) {
+  .vitrine__grille {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    margin-inline: -12px;
+    padding-inline: 12px;
+  }
+  .vitrine__grille::-webkit-scrollbar { display: none; }
+  .carte { flex: 0 0 78%; scroll-snap-align: center; }
+  .carte__cta { white-space: normal; width: max-content; max-width: 90%; }
+}
+
+/* ============================================================
+   BANDEAU éditorial — réf. mobile-banner-collection (rouge/ambre)
+   ============================================================ */
+.bandeau {
+  position: relative;
+  margin: 0 clamp(12px, 1.5vw, 20px) clamp(40px, 5vw, 72px);
+  border-radius: var(--radius-carte);
+  overflow: hidden;
+  min-height: clamp(420px, 60vh, 620px);
+  display: grid;
+  place-items: center;
+  color: var(--blanc);
+  /* macro regard doré + voile chaud pour le texte */
+  background:
+    linear-gradient(180deg, rgb(42 14 8 / .45), rgb(42 14 8 / .62)),
+    url("../public/assets/images/eye-gold-banner.png") center 38% / cover no-repeat;
+}
+.bandeau__contenu {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  padding: clamp(32px, 6vw, 64px);
+  max-width: 560px;
+}
+.bandeau__titre { font-size: clamp(30px, 4vw, 52px); }
+.bandeau__texte { font-size: 14px; line-height: 1.65; color: rgb(255 255 255 / .88); }
+
+/* ============================================================
+   SALT KIT™ — réf. desktop « bronzed all over » (texte / flat-lay)
+   ============================================================ */
+.kit {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  align-items: center;
+  gap: clamp(24px, 4vw, 64px);
+  padding: 0 clamp(16px, 3vw, 40px) clamp(40px, 5vw, 72px);
+  max-width: var(--conteneur);
+  margin-inline: auto;
+}
+.kit__texte { display: grid; justify-items: start; gap: 16px; max-width: 420px; }
+.kit__titre { font-size: clamp(28px, 3vw, 42px); }
+.kit__sous { font-size: 14px; color: var(--gris-texte); line-height: 1.65; }
+
+/* Coffret Salt Kit™ au bord de l'eau */
+.kit__visuel {
+  position: relative;
+  aspect-ratio: 5 / 4;
+  border-radius: var(--radius-carte);
+  overflow: hidden;
+  background: url("../public/assets/aftersun-video.png") center / cover no-repeat;
+}
+
+@media (max-width: 860px) {
+  .kit { grid-template-columns: 1fr; }
+  .kit__visuel { order: -1; }
+}
+
+/* ============================================================
+   UGC « revelashion + vous » — réf. desktop-section-rhode-plus-you
+   ============================================================ */
+.ugc {
+  background: var(--creme-2);
+  border-radius: var(--radius-carte);
+  margin: 0 clamp(12px, 1.5vw, 20px) clamp(40px, 5vw, 72px);
+  padding: clamp(24px, 3vw, 40px);
+}
+.ugc__entete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+.ugc__titre { font-size: clamp(24px, 2.4vw, 34px); }
+
+.ugc__piste {
+  display: flex;
+  gap: clamp(10px, 1.2vw, 16px);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.ugc__piste::-webkit-scrollbar { display: none; }
+
+.ugc__photo {
+  position: relative;
+  flex: 0 0 calc(25% - 12px);
+  aspect-ratio: 3 / 4;
+  border-radius: 8px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  transition: transform .4s cubic-bezier(.4,0,.2,1);
+}
+.ugc__photo:hover { transform: translateY(-6px); }
+/* Regards communauté — un par teinte Hair Match™ */
+.ugc__photo { background-position: center; background-size: cover; }
+.ugc__photo--1 { background-image: url("../public/assets/hair-black.png"); }
+.ugc__photo--2 { background-image: url("../public/assets/hair-brown.png"); }
+.ugc__photo--3 { background-image: url("../public/assets/hair-blonde.png"); }
+.ugc__photo--4 { background-image: url("../public/assets/hair-copper.png"); }
+.ugc__photo--5 { background-image: url("../public/assets/wetlift-after.png"); }
+
+.ugc__tag {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  z-index: 1;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--blanc);
+  background: rgb(20 20 20 / .45);
+  backdrop-filter: blur(3px);
+  padding: 4px 10px;
+  border-radius: 999px;
+  opacity: 0;
+  translate: 0 6px;
+  transition: opacity var(--transition), translate var(--transition);
+}
+.ugc__photo:hover .ugc__tag { opacity: 1; translate: 0 0; }
+
+.ugc__fleches { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
+.ugc__fleche {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--noir);
+  border-radius: 50%;
+  font-size: 14px;
+  display: grid;
+  place-items: center;
+  transition: background var(--transition), color var(--transition);
+}
+.ugc__fleche:hover { background: var(--noir); color: var(--blanc); }
+
+@media (max-width: 860px) {
+  .ugc__photo { flex-basis: 64%; }
+  .ugc__cta { display: none; }
+  .ugc__tag { opacity: 1; translate: 0 0; }
+}
+
+/* ============================================================
+   MISSION / VALEURS — réf. desktop-section-mission-valeurs
+   ============================================================ */
+.mission {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(12px, 1.5vw, 20px);
+  margin: 0 clamp(12px, 1.5vw, 20px) clamp(40px, 5vw, 72px);
+}
+.mission__panneau {
+  background: var(--creme-2);
+  border-radius: var(--radius-carte);
+  padding: clamp(28px, 3.5vw, 52px);
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: 24px;
+}
+.mission__manifeste {
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.35;
+  letter-spacing: -.01em;
+  max-width: 18em;
+}
+.mission__manifeste span { font-weight: 600; }
+
+.mission__liste { width: 100%; margin-top: clamp(16px, 4vh, 56px); }
+.mission__item { border-top: 1px solid var(--gris-ligne); }
+.mission__resume {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 2px;
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: lowercase;
+  cursor: pointer;
+  transition: opacity var(--transition);
+}
+.mission__resume:hover { opacity: .6; }
+.mission__plus { font-weight: 400; transition: rotate var(--transition); }
+.mission__item[open] .mission__plus { rotate: 45deg; }
+.mission__detail {
+  font-size: 14px;
+  color: var(--gris-texte);
+  line-height: 1.65;
+  padding: 0 2px 18px;
+  max-width: 34em;
+}
+
+/* Les 5 modèles Hair Match™ */
+.mission__visuel {
+  border-radius: var(--radius-carte);
+  overflow: hidden;
+  min-height: 480px;
+  background: url("../public/assets/assets/hero.jpg") center 20% / cover no-repeat;
+}
+
+@media (max-width: 860px) {
+  .mission { grid-template-columns: 1fr; }
+  .mission__visuel { min-height: 320px; }
+}
+
+/* ============================================================
+   FOOTER — logo géant marron, réf. desktop-footer-logo-geant
+   ============================================================ */
+.footer { padding-top: clamp(24px, 4vw, 56px); }
+
+.footer__logo-geant {
+  font-size: clamp(64px, 15.5vw, 232px);
+  font-weight: 700;
+  letter-spacing: -.05em;
+  line-height: .8;
+  text-align: center;
+  text-transform: lowercase;
+  color: var(--brun);
+  white-space: nowrap;
+  user-select: none;
+  /* lettres qui montent au scroll (JS ajoute .est-visible) */
+  clip-path: inset(0 0 0 0);
+}
+.footer__logo-geant span {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform .9s cubic-bezier(.2, .6, .2, 1);
+}
+.footer__logo-geant.est-visible span { transform: none; }
+
+.footer__grille {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr 1.1fr;
+  gap: clamp(24px, 3vw, 48px);
+  border-top: 1px solid var(--gris-ligne);
+  margin-top: clamp(24px, 3vw, 48px);
+  padding: clamp(28px, 3.5vw, 52px) clamp(16px, 3vw, 40px);
+  max-width: var(--conteneur);
+  margin-inline: auto;
+}
+
+.footer__accroche { font-size: 15px; font-weight: 500; margin-bottom: 8px; }
+.footer__note { font-size: 13px; color: var(--gris-texte); line-height: 1.6; }
+
+.footer__form {
+  display: flex;
+  margin-top: 16px;
+  border: 1px solid var(--gris-ligne);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--blanc);
+}
+.footer__input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  padding: 13px 14px;
+  font-size: 13px;
+  background: transparent;
+  outline-offset: -2px;
+}
+.footer__envoyer { padding: 0 18px; flex: none; transition: opacity var(--transition); }
+.footer__envoyer:hover { opacity: .55; }
+.footer__legal { font-size: 11.5px; color: var(--gris-texte); margin-top: 10px; }
+
+.footer__col { display: grid; align-content: start; gap: 10px; font-size: 13.5px; }
+.footer__col a { width: max-content; transition: opacity var(--transition); }
+.footer__col a:hover { opacity: .55; }
+.footer__titre { margin-bottom: 6px; }
+
+.footer__pays {
+  border-top: 1px solid var(--gris-ligne);
+  text-align: center;
+  font-size: 12px;
+  color: var(--gris-texte);
+  padding: 18px 16px 22px;
+}
+.footer__pays-btn { font-size: 12px; }
+
+@media (max-width: 860px) {
+  .footer__grille { grid-template-columns: 1fr 1fr; }
+  .footer__news { grid-column: 1 / -1; }
 }

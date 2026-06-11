@@ -7,7 +7,7 @@
   <meta name="description" content="REVELASHION™ — LashCare™, Hair Match™, Reveal Ready™. La collection Salt Series™ arrive le 05 juillet.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Michroma&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <script src="js/main.js" defer></script>
 </head>
@@ -40,9 +40,288 @@
         <button class="label header__lien">Panier (0)</button>
       </nav>
     </header>
-    <!-- méga-menu injecté en T3 -->
-  </div>
+    <!-- ===== Méga-menu : produits affichés directement ===== -->
+    <div class="menu" data-menu hidden>
+      <div class="menu__onglets" role="tablist" aria-label="Catégories">
+        <button class="menu__onglet label est-actif" data-onglet="salt" role="tab" aria-selected="true">Salt '26</button>
+        <button class="menu__onglet label" data-onglet="ready" role="tab" aria-selected="false">Reveal Ready™</button>
+        <button class="menu__onglet label" data-onglet="avenir" role="tab" aria-selected="false">À venir</button>
+        <button class="menu__onglet label" data-onglet="sets" role="tab" aria-selected="false">Sets</button>
+        <span class="menu__souligne" data-souligne aria-hidden="true"></span>
+      </div>
 
-  <!-- sections injectées aux tâches suivantes -->
+      <div class="menu__panneau est-actif" data-panneau="salt">
+        <a class="menu__produit" href="produit.html">
+          <span class="menu__vignette menu__vignette--aftersun" aria-hidden="true"></span>
+          <span class="menu__infos"><strong>AFTERSUN™</strong><small>Regard naturel retour de plage</small></span>
+          <span class="badge">accès anticipé</span>
+        </a>
+        <a class="menu__produit" href="produit.html">
+          <span class="menu__vignette menu__vignette--wetlift" aria-hidden="true"></span>
+          <span class="menu__infos"><strong>WETLIFT™</strong><small>Wet look, sortie de baignade</small></span>
+          <span class="badge">accès anticipé</span>
+        </a>
+        <a class="menu__produit" href="produit.html">
+          <span class="menu__vignette menu__vignette--primer" aria-hidden="true"></span>
+          <span class="menu__infos"><strong>LE PRIMER™</strong><small>Prolonge la tenue jusqu'à 5 jours</small></span>
+        </a>
+        <a class="menu__produit" href="produit.html">
+          <span class="menu__vignette menu__vignette--saltkit" aria-hidden="true"></span>
+          <span class="menu__infos"><strong>SALT KIT™</strong><small>Aftersun™ + Wetlift™ + Primer™</small></span>
+          <span class="badge badge--vert">exclu revelashion</span>
+        </a>
+      </div>
+
+      <div class="menu__panneau" data-panneau="ready" hidden>
+        <p class="menu__concept">Comme des faux cils en bande. <em>Sans la bande visible.</em></p>
+        <a class="menu__produit" href="produit.html">
+          <span class="menu__vignette menu__vignette--aftersun" aria-hidden="true"></span>
+          <span class="menu__infos"><strong>AFTERSUN™</strong><small>Regard naturel retour de plage</small></span>
+          <span class="badge">accès anticipé</span>
+        </a>
+        <a class="menu__produit" href="produit.html">
+          <span class="menu__vignette menu__vignette--wetlift" aria-hidden="true"></span>
+          <span class="menu__infos"><strong>WETLIFT™</strong><small>Wet look, sortie de baignade</small></span>
+          <span class="badge">accès anticipé</span>
+        </a>
+      </div>
+
+      <div class="menu__panneau" data-panneau="avenir" hidden>
+        <div class="menu__produit menu__produit--teaser">
+          <span class="menu__vignette menu__vignette--sport" aria-hidden="true"></span>
+          <span class="menu__infos"><strong>PILATES™</strong><small>Sport Series™ — première collection sport</small></span>
+          <span class="badge">bientôt</span>
+        </div>
+        <div class="menu__produit menu__produit--teaser">
+          <span class="menu__vignette menu__vignette--sport" aria-hidden="true"></span>
+          <span class="menu__infos"><strong>TENNIS™</strong><small>Sport Series™ — regard match point</small></span>
+          <span class="badge">bientôt</span>
+        </div>
+        <div class="menu__produit menu__produit--teaser">
+          <span class="menu__vignette menu__vignette--focus" aria-hidden="true"></span>
+          <span class="menu__infos"><strong>ENTREPRENEUR™</strong><small>Focus Series™ — cat eye signature</small></span>
+          <span class="badge">rentrée</span>
+        </div>
+        <div class="menu__produit menu__produit--teaser">
+          <span class="menu__vignette menu__vignette--focus" aria-hidden="true"></span>
+          <span class="menu__infos"><strong>STUDENT™</strong><small>Focus Series™ — volume assumé</small></span>
+          <span class="badge">rentrée</span>
+        </div>
+        <div class="menu__produit menu__produit--teaser">
+          <span class="menu__vignette menu__vignette--modulash" aria-hidden="true"></span>
+          <span class="menu__infos"><strong>MODULASH™</strong><small>Build Your Own Look™</small></span>
+          <span class="badge badge--vert">septembre</span>
+        </div>
+      </div>
+
+      <div class="menu__panneau" data-panneau="sets" hidden>
+        <a class="menu__produit" href="produit.html">
+          <span class="menu__vignette menu__vignette--saltkit" aria-hidden="true"></span>
+          <span class="menu__infos"><strong>SALT KIT™</strong><small>Aftersun™ + Wetlift™ + Primer™</small></span>
+          <span class="badge badge--vert">exclu revelashion</span>
+        </a>
+      </div>
+
+      <a class="btn menu__cta" href="collection.html">Voir la collection</a>
+    </div>
+  </div>
+  <div class="menu-voile" data-menu-voile hidden></div>
+
+  <!-- ===== Hero plein écran — Salt Series™ ===== -->
+  <section class="hero grain" aria-label="La collection Salt Series arrive">
+    <div class="hero__visuel" aria-hidden="true">
+      <!-- asset : public/assets/aftersun-hero.png (campagne Salt Series™) -->
+    </div>
+    <div class="hero__contenu">
+      <h1 class="hero__titre">La collection Salt Series™ est là.</h1>
+      <p class="hero__date label">Lancement — 05 juillet, 9h</p>
+      <a class="btn btn--plein hero__cta" href="collection.html">Découvrir</a>
+    </div>
+  </section>
+
+  <!-- ===== Vitrine — 3 cards produits Salt Series™ ===== -->
+  <section class="vitrine" aria-label="Les produits Salt Series">
+    <div class="vitrine__grille" data-carrousel>
+
+      <article class="carte reveal">
+        <a class="carte__media" href="produit.html" aria-label="Aftersun — voir le produit">
+          <span class="carte__mot mot-display carte__mot--blanc">aftersun</span>
+          <span class="badge carte__badge">accès anticipé</span>
+          <span class="carte__photo carte__photo--aftersun grain" aria-hidden="true"></span>
+        </a>
+        <div class="carte__infos">
+          <p class="carte__ligne"><strong>AFTERSUN™</strong><span class="carte__prix">26€</span></p>
+          <p class="carte__sous">Regard naturel retour de plage</p>
+          <div class="carte__pastilles" aria-label="Hair Match™ — 4 teintes">
+            <span class="pastille pastille--black" title="Black™"></span>
+            <span class="pastille pastille--brown" title="Brown™"></span>
+            <span class="pastille pastille--blonde" title="Blonde™"></span>
+            <span class="pastille pastille--copper" title="Copper™"></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="carte carte--photo reveal">
+        <a class="carte__media grain" href="produit.html" aria-label="Wetlift — voir le produit">
+          <span class="carte__mot mot-display carte__mot--blanc">wetlift</span>
+          <span class="badge carte__badge">accès anticipé</span>
+          <span class="carte__photo carte__photo--wetlift" aria-hidden="true"></span>
+          <span class="carte__swipe" aria-hidden="true">swipe</span>
+          <span class="btn btn--plein carte__cta">Acheter Wetlift™ — 26€</span>
+        </a>
+      </article>
+
+      <article class="carte reveal">
+        <a class="carte__media" href="produit.html" aria-label="Le Primer — voir le produit">
+          <span class="carte__mot mot-display">le primer</span>
+          <span class="badge carte__badge badge--brun">exclu revelashion</span>
+          <span class="carte__photo carte__photo--primer" aria-hidden="true"></span>
+        </a>
+        <div class="carte__infos">
+          <p class="carte__ligne"><strong>LE PRIMER™</strong><span class="carte__prix">14€</span></p>
+          <p class="carte__sous">Prolonge la tenue jusqu'à 5 jours</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ===== Bannière éditoriale — collection Salt Series™ ===== -->
+  <section class="bandeau grain reveal" aria-label="L'esprit Salt Series">
+    <!-- asset : public/assets/images/eye-gold-banner.png -->
+    <div class="bandeau__contenu">
+      <h2 class="bandeau__titre mot-display">aftersun, wetlift, salt</h2>
+      <p class="bandeau__texte">
+        Une collection pensée pour aller de la plage à la ville, et partout entre les deux.
+        Aftersun™ et Wetlift™, le premier regard LashCare™ qui s'accorde à ta couleur de
+        cheveux grâce au Hair Match™ — plus le Salt Kit™ en édition limitée.
+      </p>
+      <a class="btn btn--blanc" href="#club">Exclu Reveal Club™</a>
+    </div>
+  </section>
+
+  <!-- ===== Salt Kit™ — réf. « bronzed all over » ===== -->
+  <section class="kit" aria-label="Le Salt Kit">
+    <div class="kit__texte reveal">
+      <h2 class="kit__titre mot-display">salté de la tête aux cils</h2>
+      <p class="kit__sous">
+        L'essentiel de l'été, où que tu ailles : Aftersun™, Wetlift™ et Le Primer™
+        réunis dans le Salt Kit™ en édition limitée — avec l'Applicateur™ offert.
+      </p>
+      <a class="btn" href="produit.html">Exclu revelashion</a>
+    </div>
+    <div class="kit__visuel grain reveal" aria-hidden="true">
+      <!-- asset : public/assets/aftersun-video.png (coffret au bord de l'eau) -->
+    </div>
+  </section>
+
+  <!-- ===== UGC — revelashion + vous ===== -->
+  <section class="ugc reveal" aria-label="La communauté revelashion">
+    <div class="ugc__entete">
+      <h2 class="ugc__titre mot-display">revelashion + vous</h2>
+      <a class="btn ugc__cta" href="#">Retrouve-nous en social</a>
+    </div>
+    <div class="ugc__piste" data-ugc-piste>
+      <figure class="ugc__photo ugc__photo--1"><figcaption class="ugc__tag">@maya — Aftersun™ Black™</figcaption></figure>
+      <figure class="ugc__photo ugc__photo--2"><figcaption class="ugc__tag">@clara — Aftersun™ Brown™</figcaption></figure>
+      <figure class="ugc__photo ugc__photo--3"><figcaption class="ugc__tag">@lena — Aftersun™ Blonde™</figcaption></figure>
+      <figure class="ugc__photo ugc__photo--4"><figcaption class="ugc__tag">@anaïs — Aftersun™ Copper™</figcaption></figure>
+      <figure class="ugc__photo ugc__photo--5"><figcaption class="ugc__tag">@sofia — Wetlift™</figcaption></figure>
+    </div>
+    <div class="ugc__fleches">
+      <button class="ugc__fleche" data-ugc-prec aria-label="Photos précédentes">←</button>
+      <button class="ugc__fleche" data-ugc-suiv aria-label="Photos suivantes">→</button>
+    </div>
+  </section>
+
+  <!-- ===== Mission / valeurs — LashCare™ ===== -->
+  <section class="mission" id="vision" aria-label="Notre vision">
+    <div class="mission__panneau reveal">
+      <p class="mission__manifeste">
+        <span>RÉVÉLER</span>, <span>RESPECTER</span> et <span>SUBLIMER</span> le regard
+        que tu as déjà — pour des résultats qui durent, sans compromettre tes cils naturels.
+      </p>
+      <a class="btn" href="#club">Notre vision</a>
+
+      <div class="mission__liste" id="club">
+        <details class="mission__item" data-accordeon open>
+          <summary class="mission__resume">lashcare™ <span class="mission__plus" aria-hidden="true">+</span></summary>
+          <p class="mission__detail">
+            La première marque LashCare™. Sublimer le regard sans abîmer : retrait facile à
+            tout moment, moins agressif que les extensions classiques, respect total des cils naturels.
+          </p>
+        </details>
+        <details class="mission__item" data-accordeon>
+          <summary class="mission__resume">hair match™ <span class="mission__plus" aria-hidden="true">+</span></summary>
+          <p class="mission__detail">
+            Notre innovation signature : chaque modèle existe en Black™, Brown™, Blonde™ et
+            Copper™ pour un regard qui s'harmonise naturellement avec ta couleur de cheveux.
+          </p>
+        </details>
+        <details class="mission__item" data-accordeon>
+          <summary class="mission__resume">reveal club™ <span class="mission__plus" aria-hidden="true">+</span></summary>
+          <p class="mission__detail">
+            Le programme qui récompense ta fidélité : points, cadeaux, accès anticipés,
+            drops exclusifs et événements privés. Déjà plus de 16 000 membres depuis Heyes Beauty.
+          </p>
+        </details>
+      </div>
+    </div>
+    <div class="mission__visuel reveal" aria-hidden="true">
+      <!-- asset : public/assets/assets/hero.jpg (5 modèles Hair Match™) -->
+    </div>
+  </section>
+
+  <!-- ===== Footer — logo géant + colonnes ===== -->
+  <footer class="footer" aria-label="Pied de page">
+    <p class="footer__logo-geant" aria-hidden="true" data-logo-geant>revelashion</p>
+
+    <div class="footer__grille">
+      <div class="footer__news">
+        <p class="footer__accroche">Rejoins le Reveal Club™ pour un regard sans effort.</p>
+        <p class="footer__note">Tips, drops exclusifs et accès anticipé à la Salt Series™ le 05.07 — directement dans ta boîte mail.</p>
+        <form class="footer__form" action="#" method="post">
+          <input class="footer__input" type="email" name="email" placeholder="Adresse email" required>
+          <button class="footer__envoyer label" type="submit">S'inscrire</button>
+        </form>
+        <p class="footer__legal">En t'inscrivant, tu acceptes notre Politique de confidentialité*.</p>
+      </div>
+
+      <nav class="footer__col" aria-label="Naviguer">
+        <p class="footer__titre label">Naviguer</p>
+        <a href="collection.html">Shop</a>
+        <a href="#vision">Notre histoire</a>
+        <a href="#club">Reveal Club™</a>
+        <a href="#">Build or Reveal™</a>
+        <a href="#">Où nous trouver</a>
+      </nav>
+
+      <nav class="footer__col" aria-label="Réseaux sociaux">
+        <p class="footer__titre label">Social</p>
+        <a href="#">Instagram</a>
+        <a href="#">TikTok</a>
+        <a href="#">YouTube</a>
+        <a href="#">Pinterest</a>
+      </nav>
+
+      <nav class="footer__col" aria-label="Officiel">
+        <p class="footer__titre label">Officiel</p>
+        <a href="#">Confidentialité</a>
+        <a href="#">CGV</a>
+        <a href="#">Accessibilité</a>
+        <a href="#">FAQ</a>
+        <a href="#">Contact</a>
+      </nav>
+
+      <div class="footer__col">
+        <p class="footer__titre label">Support</p>
+        <p class="footer__note">On est là du lundi au vendredi, 9h-17h.</p>
+        <p class="footer__note">Écris-nous quand tu veux.</p>
+        <p class="footer__note">© revelashion 2026</p>
+      </div>
+    </div>
+
+    <p class="footer__pays">Pays / région : <button class="footer__pays-btn">France (EUR €) ▾</button></p>
+  </footer>
 </body>
 </html>

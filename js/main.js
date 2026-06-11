@@ -23,12 +23,10 @@ document.addEventListener("DOMContentLoaded", () => {
   initHeader();
   initMarquee();
   initMegaMenu();
-  initCarrousels();
-  initHairMatchStrip();
   initReveals();
+  initUgc();
   initAccordeons();
-  initFiltres();
-  initFicheProduit();
+  initLogoGeant();
 });
 
 function initHeader() {
@@ -47,11 +45,127 @@ function initMarquee() {
     btn.setAttribute("aria-label", pause ? "Relancer le bandeau" : "Mettre en pause le bandeau");
   });
 }
-function initMegaMenu() {}
-function initCarrousels() {}
-function initShowcase() {}
-function initHairMatchStrip() {}
-function initReveals() {}
-function initAccordeons() {}
-function initFiltres() {}
-function initFicheProduit() {}
+
+// ------------------------------------------------------------
+// Méga-menu : ouverture (Shop / burger), onglets + souligné animé
+// ------------------------------------------------------------
+function initMegaMenu() {
+  const menu = document.querySelector("[data-menu]");
+  if (!menu) return;
+
+  const declencheur = document.querySelector("[data-menu-declencheur]");
+  const burger = document.querySelector("[data-burger]");
+  const voile = document.querySelector("[data-menu-voile]");
+  const souligne = menu.querySelector("[data-souligne]");
+  const onglets = [...menu.querySelectorAll("[data-onglet]")];
+  const panneaux = [...menu.querySelectorAll("[data-panneau]")];
+
+  menu.hidden = false;   // visibilité gérée en CSS (.est-ouvert)
+  voile.hidden = false;
+  voile.style.pointerEvents = "none";
+
+  function ouvrir(etat) {
+    menu.classList.toggle("est-ouvert", etat);
+    burger?.classList.toggle("est-ouvert", etat);
+    document.body.classList.toggle("menu-ouvert", etat);
+    voile.style.opacity = etat ? "1" : "0";
+    voile.style.pointerEvents = etat ? "auto" : "none";
+    declencheur?.setAttribute("aria-expanded", etat);
+    burger?.setAttribute("aria-expanded", etat);
+    if (etat) requestAnimationFrame(positionnerSouligne);
+  }
+  const estOuvert = () => menu.classList.contains("est-ouvert");
+
+  declencheur?.addEventListener("click", () => ouvrir(!estOuvert()));
+  burger?.addEventListener("click", () => ouvrir(!estOuvert()));
+  voile.addEventListener("click", () => ouvrir(false));
+  addEventListener("keydown", (e) => { if (e.key === "Escape") ouvrir(false); });
+
+  // Onglets
+  function positionnerSouligne() {
+    const actif = menu.querySelector(".menu__onglet.est-actif");
+    if (!actif || !souligne) return;
+    souligne.style.left = `${actif.offsetLeft}px`;
+    souligne.style.width = `${actif.offsetWidth}px`;
+  }
+  onglets.forEach((onglet) => {
+    onglet.addEventListener("click", () => {
+      onglets.forEach((o) => {
+        o.classList.toggle("est-actif", o === onglet);
+        o.setAttribute("aria-selected", o === onglet);
+      });
+      panneaux.forEach((p) => {
+        const actif = p.dataset.panneau === onglet.dataset.onglet;
+        p.hidden = !actif;
+        p.classList.toggle("est-actif", actif);
+      });
+      positionnerSouligne();
+    });
+  });
+  addEventListener("resize", positionnerSouligne);
+}
+
+// ------------------------------------------------------------
+// Apparitions au scroll (.reveal → .est-visible)
+// ------------------------------------------------------------
+function initReveals() {
+  const cibles = document.querySelectorAll(".reveal");
+  if (!cibles.length) return;
+  const observeur = new IntersectionObserver((entrees) => {
+    entrees.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add("est-visible");
+        observeur.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.18 });
+  cibles.forEach((c) => observeur.observe(c));
+}
+
+// ------------------------------------------------------------
+// Galerie UGC : flèches ← →
+// ------------------------------------------------------------
+function initUgc() {
+  const piste = document.querySelector("[data-ugc-piste]");
+  if (!piste) return;
+  const pas = () => piste.querySelector(".ugc__photo").offsetWidth + 14;
+  document.querySelector("[data-ugc-prec]")?.addEventListener("click", () => piste.scrollBy({ left: -pas(), behavior: "smooth" }));
+  document.querySelector("[data-ugc-suiv]")?.addEventListener("click", () => piste.scrollBy({ left: pas(), behavior: "smooth" }));
+}
+
+// ------------------------------------------------------------
+// Accordéon mission : un seul item ouvert à la fois
+// ------------------------------------------------------------
+function initAccordeons() {
+  const items = [...document.querySelectorAll("[data-accordeon]")];
+  items.forEach((item) => {
+    item.addEventListener("toggle", () => {
+      if (item.open) items.forEach((autre) => { if (autre !== item) autre.open = false; });
+    });
+  });
+}
+
+// ------------------------------------------------------------
+// Logo géant footer : lettres qui montent à l'entrée en vue
+// ------------------------------------------------------------
+function initLogoGeant() {
+  const logo = document.querySelector("[data-logo-geant]");
+  if (!logo) return;
+  const texte = logo.textContent.trim();
+  logo.textContent = "";
+  [...texte].forEach((lettre, i) => {
+    const span = document.createElement("span");
+    span.textContent = lettre;
+    span.style.transitionDelay = `${i * 35}ms`;
+    logo.appendChild(span);
+  });
+  const observeur = new IntersectionObserver((entrees) => {
+    entrees.forEach((e) => {
+      if (e.isIntersecting) {
+        logo.classList.add("est-visible");
+        observeur.disconnect();
+      }
+    });
+  }, { threshold: 0.4 });
+  observeur.observe(logo);
+}
