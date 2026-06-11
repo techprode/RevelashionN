@@ -160,18 +160,18 @@ body.menu-ouvert { overflow: hidden; }
 :focus-visible { outline: 2px solid var(--noir); outline-offset: 3px; }
 
 /* ============================================================
-   BARRE D'ANNONCE (marquee) — bandeau noir, réf. mockup mobile
+   BARRE D'ANNONCE (marquee) — carte claire arrondie, réf. IMG_5151
    ============================================================ */
 .annonce {
   display: flex;
   align-items: center;
-  height: 34px;
-  background: var(--noir);
-  color: var(--creme);
+  height: 38px;
+  background: var(--creme-2);
+  color: #4A4A45;
   overflow: hidden;
-  font-size: 10.5px;
-  font-weight: 500;
-  letter-spacing: .14em;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .1em;
   text-transform: uppercase;
 }
 .annonce__piste {
@@ -185,10 +185,10 @@ body.menu-ouvert { overflow: hidden; }
 .annonce__pause {
   flex: none;
   width: 44px;
-  height: 34px;
-  font-size: 11px;
-  background: var(--noir);
-  box-shadow: -16px 0 12px var(--noir);
+  height: 38px;
+  font-size: 12px;
+  background: var(--creme-2);
+  box-shadow: -16px 0 12px var(--creme-2);
 }
 
 /* ============================================================
@@ -227,33 +227,56 @@ body.menu-ouvert { overflow: hidden; }
   padding-bottom: 4px;
 }
 
-/* Burger (mobile) */
+/* Icônes (loupe, panier) — affichées en mobile, réf. IMG_5151 */
+.header__icone {
+  display: none;
+  width: 22px;
+  height: 22px;
+  position: relative;
+}
+.header__icone svg { width: 100%; height: 100%; }
+.header__compteur {
+  position: absolute;
+  top: 4px;
+  left: 56%;
+  translate: -50%;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+/* Burger 3 traits → 1 trait à l'ouverture, réf. menudropanimation */
 .header__burger {
   display: none;
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   position: relative;
 }
 .header__burger span {
   position: absolute;
-  left: 7px;
-  width: 18px;
-  height: 1.5px;
-  background: var(--noir);
-  transition: transform var(--transition), opacity var(--transition);
+  left: 5px;
+  width: 24px;
+  height: 2.5px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform .35s cubic-bezier(.4,0,.2,1), opacity .25s;
 }
-.header__burger span:first-child { top: 12px; }
-.header__burger span:last-child { top: 19px; }
-.header__burger.est-ouvert span:first-child { transform: translateY(3.5px); }
-.header__burger.est-ouvert span:last-child { opacity: 0; }
+.header__burger span:nth-child(1) { top: 10px; }
+.header__burger span:nth-child(2) { top: 16px; }
+.header__burger span:nth-child(3) { top: 22px; }
+.header__burger.est-ouvert span:nth-child(1) { transform: translateY(6px); opacity: 0; }
+.header__burger.est-ouvert span:nth-child(3) { transform: translateY(-6px); opacity: 0; }
 
 @media (max-width: 1079px) {
   .header { grid-template-columns: auto 1fr auto; }
   .header__nav--gauche { display: none; }
   .header__burger { display: block; }
   .header__lien--compte { display: none; }
-  .header__logo { justify-self: center; font-size: 26px; }
-  .header__nav--droite { gap: 16px; }
+  .header__logo { justify-self: center; font-size: 27px; }
+  .header__nav--droite { gap: 18px; }
+  /* texte → icônes */
+  .header__lien-texte { display: none; }
+  .header__icone { display: block; }
 }
 
 /* ============================================================
@@ -371,17 +394,35 @@ a.menu__produit:hover { box-shadow: 0 6px 20px rgb(0 0 0 / .08); }
 
 .menu__cta { display: block; width: max-content; margin: 26px auto 0; }
 
-/* Méga-menu : mobile = overlay plein écran */
+/* Méga-menu mobile : rideau qui tombe, réf. menudropanimation.mov */
 @media (max-width: 1079px) {
   .menu {
-    /* plein écran sous l'entête, réf. mockup menu mobile */
-    height: calc(100dvh - 100px);
+    left: 10px;
+    right: 10px;
+    height: calc(100dvh - 88px);
     overflow-y: auto;
-    padding-bottom: 80px;
+    padding: 18px 14px 70px;
     border-top: none;
-    box-shadow: 0 1px 0 var(--gris-ligne) inset;
+    border-radius: 0 0 22px 22px;
+    /* curtain drop : on remplace le fondu desktop par un clip vertical */
+    transform: none;
+    opacity: 1;
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path .55s cubic-bezier(.65, 0, .25, 1);
   }
-  .menu__panneau { grid-template-columns: 1fr; }
+  .menu.est-ouvert { clip-path: inset(0 0 0 0); }
+
+  /* Onglets plus grands, réf. frame menu */
+  .menu__onglet { font-size: 14px; letter-spacing: .06em; }
+  .menu__onglets { gap: 24px; }
+
+  /* Rows blanches hautes, badge en haut à droite */
+  .menu__panneau { grid-template-columns: 1fr; gap: 14px; }
+  .menu__produit { position: relative; padding: 22px 16px; border-radius: 14px; }
+  .menu__produit .badge { position: absolute; top: 12px; right: 12px; margin-left: 0; }
+  .menu__vignette { width: 64px; height: 64px; }
+  .menu__infos strong { font-size: 15px; }
+  .menu__infos small { font-size: 13.5px; }
   .menu__cta { width: 100%; }
 }
 
@@ -390,7 +431,7 @@ a.menu__produit:hover { box-shadow: 0 6px 20px rgb(0 0 0 / .08); }
    ============================================================ */
 .hero {
   position: relative;
-  height: calc(100svh - 34px - 68px);   /* viewport - annonce - header */
+  height: calc(100svh - 38px - 68px);   /* viewport - annonce - header */
   min-height: 520px;
   display: flex;
   align-items: flex-end;
@@ -842,4 +883,58 @@ a.menu__produit:hover { box-shadow: 0 6px 20px rgb(0 0 0 / .08); }
 @media (max-width: 860px) {
   .footer__grille { grid-template-columns: 1fr 1fr; }
   .footer__news { grid-column: 1 / -1; }
+}
+
+/* ============================================================
+   MOBILE — réf. IMG_5151 / IMG_5153 / menudropanimation.mov
+   annonce carte arrondie · header transparent sur hero ·
+   blur au scroll · hero carte inset
+   ============================================================ */
+@media (max-width: 1079px) {
+
+  /* Annonce : carte arrondie avec écart volontaire avant le hero */
+  .annonce {
+    margin: 10px 10px 42px;
+    border-radius: 14px;
+    height: 44px;
+  }
+  .annonce__pause { height: 44px; }
+
+  /* Header : transparent posé sur la photo (logo + icônes blancs),
+     puis crème translucide + blur dès qu'on scrolle ou qu'on ouvre le menu */
+  .header {
+    padding: 14px 16px;
+    background: transparent;
+    color: var(--blanc);
+    transition: background .35s ease, color .35s ease, box-shadow .35s ease;
+  }
+  .entete.est-scrolle .header {
+    background: rgb(245 244 239 / .86);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    color: var(--noir);
+  }
+  body.menu-ouvert .header {
+    background: var(--creme);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    color: var(--noir);
+  }
+  /* le menu ouvert forme une carte arrondie inset, réf. vidéo */
+  body.menu-ouvert .entete { padding-inline: 10px; }
+  body.menu-ouvert .header { border-radius: 22px 22px 0 0; }
+
+  /* Hero : carte arrondie inset, glissée sous le header transparent */
+  .hero {
+    margin: -62px 10px 0;
+    border-radius: 22px;
+    height: calc(100svh - 128px);
+    min-height: 480px;
+  }
+
+  /* Cards vitrine plus arrondies, réf. IMG_5153 */
+  .carte__media { border-radius: 20px; }
+
+  /* Les autres cartes de section s'alignent sur la marge 10px */
+  .bandeau, .ugc, .mission { margin-inline: 10px; }
 }

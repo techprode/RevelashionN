@@ -26,7 +26,7 @@
   <div class="entete">
     <header class="header" data-header>
       <button class="header__burger" data-burger aria-label="Ouvrir le menu" aria-expanded="false">
-        <span></span><span></span>
+        <span></span><span></span><span></span>
       </button>
       <nav class="header__nav header__nav--gauche" aria-label="Navigation principale">
         <button class="label header__lien" data-menu-declencheur aria-expanded="false">Shop</button>
@@ -35,9 +35,22 @@
       </nav>
       <a class="header__logo" href="index.html">revelashion</a>
       <nav class="header__nav header__nav--droite" aria-label="Compte et panier">
-        <button class="label header__lien">Recherche</button>
+        <button class="label header__lien" aria-label="Recherche">
+          <span class="header__lien-texte">Recherche</span>
+          <svg class="header__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/>
+          </svg>
+        </button>
         <button class="label header__lien header__lien--compte">Compte</button>
-        <button class="label header__lien">Panier (0)</button>
+        <button class="label header__lien" aria-label="Panier, 0 article">
+          <span class="header__lien-texte">Panier (0)</span>
+          <span class="header__icone header__icone--panier" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 5h2.2l2.2 12.4a1.4 1.4 0 0 0 1.4 1.1h8.6a1.4 1.4 0 0 0 1.4-1.1L20.5 8H6"/>
+            </svg>
+            <span class="header__compteur">0</span>
+          </span>
+        </button>
       </nav>
     </header>
     <!-- ===== Méga-menu : produits affichés directement ===== -->
