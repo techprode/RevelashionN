@@ -1,0 +1,12 @@
+{
+  "name": "revelashion",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "vercel-build": "echo \"No build step for static site\"",
+    "start": "sirv . --single --no-clear"
+  },
+  "devDependencies": {
+    "sirv-cli": "^2.0.0"
+  }
+}
