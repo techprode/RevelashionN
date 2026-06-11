@@ -12,6 +12,37 @@
   <script src="js/main.js" defer></script>
 </head>
 <body>
+
+  <!-- ===== Barre d'annonce (marquee) ===== -->
+  <div class="annonce" data-marquee>
+    <div class="annonce__piste">
+      <span class="annonce__contenu">LANCEMENT OFFICIEL — 05.07.2026 • REJOINS LE REVEAL CLUB™ • LIVRAISON OFFERTE DÈS 45€ •&nbsp;</span>
+      <span class="annonce__contenu" aria-hidden="true">LANCEMENT OFFICIEL — 05.07.2026 • REJOINS LE REVEAL CLUB™ • LIVRAISON OFFERTE DÈS 45€ •&nbsp;</span>
+    </div>
+    <button class="annonce__pause" data-marquee-toggle aria-label="Mettre en pause le bandeau">⏸</button>
+  </div>
+
+  <!-- ===== Entête sticky : header + méga-menu ===== -->
+  <div class="entete">
+    <header class="header" data-header>
+      <button class="header__burger" data-burger aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+      <nav class="header__nav header__nav--gauche" aria-label="Navigation principale">
+        <button class="label header__lien" data-menu-declencheur aria-expanded="false">Shop</button>
+        <a class="label header__lien" href="#vision">À propos</a>
+        <a class="label header__lien" href="#club">Reveal Club™</a>
+      </nav>
+      <a class="header__logo" href="index.html">revelashion</a>
+      <nav class="header__nav header__nav--droite" aria-label="Compte et panier">
+        <button class="label header__lien">Recherche</button>
+        <button class="label header__lien header__lien--compte">Compte</button>
+        <button class="label header__lien">Panier (0)</button>
+      </nav>
+    </header>
+    <!-- méga-menu injecté en T3 -->
+  </div>
+
   <!-- sections injectées aux tâches suivantes -->
 </body>
 </html>

@@ -31,8 +31,22 @@ document.addEventListener("DOMContentLoaded", () => {
   initFicheProduit();
 });
 
-function initHeader() {}
-function initMarquee() {}
+function initHeader() {
+  const entete = document.querySelector(".entete");
+  if (!entete) return;
+  addEventListener("scroll", () => entete.classList.toggle("est-scrolle", scrollY > 24), { passive: true });
+}
+
+function initMarquee() {
+  const annonce = document.querySelector("[data-marquee]");
+  if (!annonce) return;
+  const btn = annonce.querySelector("[data-marquee-toggle]");
+  btn.addEventListener("click", () => {
+    const pause = annonce.classList.toggle("est-pause");
+    btn.textContent = pause ? "▶" : "⏸";
+    btn.setAttribute("aria-label", pause ? "Relancer le bandeau" : "Mettre en pause le bandeau");
+  });
+}
 function initMegaMenu() {}
 function initCarrousels() {}
 function initShowcase() {}
