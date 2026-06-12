@@ -1244,16 +1244,24 @@ a.menu__produit:hover { box-shadow: 0 6px 20px rgb(0 0 0 / .08); }
    ============================================================ */
 .page-fiche { background: var(--blanc); padding-bottom: 120px; }
 
+.fiche { position: relative; max-width: 760px; margin-inline: auto; padding-top: 20px; }
+
 .fiche-barre {
-  position: sticky;
-  top: 0;
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 50;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  background: var(--creme-2);
-  padding: 18px clamp(16px, 3vw, 40px);
+  width: min(100%, 700px);
+  background: rgba(245, 244, 239, .95);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+  padding: 16px 20px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.1);
 }
 .fiche-barre__titre {
   font-size: clamp(15px, 2vw, 19px);
@@ -1265,10 +1273,9 @@ a.menu__produit:hover { box-shadow: 0 6px 20px rgb(0 0 0 / .08); }
 .fiche-barre__fermer { flex: none; width: 26px; height: 26px; transition: opacity var(--transition); }
 .fiche-barre__fermer:hover { opacity: .55; }
 
-.fiche { max-width: 760px; margin-inline: auto; }
-
 /* Carrousel photos + points */
 .fiche__carrousel {
+  margin-top: 92px;
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
@@ -1277,7 +1284,8 @@ a.menu__produit:hover { box-shadow: 0 6px 20px rgb(0 0 0 / .08); }
 .fiche__carrousel::-webkit-scrollbar { display: none; }
 .fiche__slide {
   flex: 0 0 100%;
-  aspect-ratio: 1 / 1.05;
+  aspect-ratio: 4 / 5;
+  max-height: 580px;
   scroll-snap-align: center;
   background-position: center;
   background-size: cover;
@@ -1458,3 +1466,325 @@ a.menu__produit:hover { box-shadow: 0 6px 20px rgb(0 0 0 / .08); }
   .produit__prix { gap: 10px; }
   .produit__prix-bloc--barre { padding-left: 10px; }
 }
+
+/* ============================================================
+   REVEAL CLUB™ (club.html) — fond blanc, surpiqûre verte,
+   bandes vert profond monogrammées RR, carte fidélité 3D
+   ============================================================ */
+.page-club {
+  --vert: #1B4D3E;
+  --vert-fonce: #143C30;
+  /* motif monogramme RR embossé, ton sur ton */
+  --motif-rr: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='130'%3E%3Cg font-family='Instrument Sans, Helvetica, sans-serif' font-weight='700' font-size='44'%3E%3Ctext x='12' y='48' fill='%23000000' opacity='.14'%3ERR%3C/text%3E%3Ctext x='11' y='47' fill='%23ffffff' opacity='.07'%3ERR%3C/text%3E%3Ctext x='97' y='112' fill='%23000000' opacity='.14'%3ERR%3C/text%3E%3Ctext x='96' y='111' fill='%23ffffff' opacity='.07'%3ERR%3C/text%3E%3C/g%3E%3C/svg%3E");
+  background: var(--blanc);
+}
+
+/* ---------- Hero vert monogrammé ---------- */
+.club-hero {
+  background:
+    var(--motif-rr),
+    linear-gradient(165deg, #226350 0%, var(--vert) 45%, var(--vert-fonce) 100%);
+  color: var(--blanc);
+  text-align: center;
+  padding: clamp(40px, 6vw, 72px) 20px 0;
+}
+.club-hero__sur { color: rgb(255 255 255 / .65); margin-bottom: 10px; }
+.club-hero__titre { font-size: clamp(38px, 6vw, 72px); }
+
+/* écrin : la carte déborde du hero sur le blanc */
+.club-carte-zone {
+  display: grid;
+  justify-content: center;
+  padding-top: clamp(28px, 4vw, 48px);
+  margin-bottom: calc(-1 * clamp(70px, 11vw, 130px));
+  transform: translateY(clamp(0px, 1vw, 10px));
+}
+
+/* ---------- Carte de fidélité noire 3D ---------- */
+.club-carte {
+  width: min(420px, 86vw);
+  aspect-ratio: 1.586;
+  perspective: 900px;
+  animation: club-flotte 6s ease-in-out infinite;
+}
+@keyframes club-flotte {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+.club-carte__interieur {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+  /* noir mat : fond quasi uniforme, sans reflet brillant */
+  background: linear-gradient(160deg, #1A1A1A 0%, #121212 55%, #0E0E0E 100%);
+  box-shadow:
+    0 30px 60px rgb(10 26 20 / .45),
+    inset 0 1px 0 rgb(255 255 255 / .05);
+  transform-style: preserve-3d;
+  transition: transform .18s ease-out;
+}
+/* grain du noir mat */
+.club-carte__interieur::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: .22;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+/* RR métallisé — en haut à gauche, taille contenue */
+.club-carte__rr {
+  position: absolute;
+  top: 16px;
+  left: 22px;
+  font-size: clamp(34px, 9vw, 48px);
+  font-weight: 700;
+  letter-spacing: -.05em;
+  line-height: 1;
+  background: linear-gradient(112deg,
+    #6F6F6F 0%, #E8E8E6 22%, #9A9A98 40%,
+    #F4F4F2 55%, #7C7C7A 72%, #D6D6D4 88%, #828280 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 1px 1px rgb(0 0 0 / .8));
+  user-select: none;
+}
+.club-carte__marque {
+  position: absolute;
+  left: 22px;
+  bottom: 16px;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -.04em;
+  text-transform: lowercase;
+  color: rgb(255 255 255 / .92);
+}
+.club-carte__numero {
+  position: absolute;
+  right: 22px;
+  bottom: 18px;
+  font-size: 10.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / .45);
+}
+/* reflet diagonal qui balaie la carte */
+.club-carte__sheen {
+  position: absolute;
+  inset: -40%;
+  background: linear-gradient(115deg, transparent 42%, rgb(255 255 255 / .09) 50%, transparent 58%);
+  animation: club-sheen 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes club-sheen {
+  0%   { transform: translateX(-55%); }
+  55%, 100% { transform: translateX(55%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .club-carte, .club-carte__sheen { animation: none; }
+}
+
+/* ---------- Identité membre ---------- */
+.club-membre {
+  text-align: center;
+  font-size: 14.5px;
+  color: var(--gris-texte);
+  padding: clamp(86px, 13vw, 150px) 16px 8px;
+}
+.club-membre strong { color: var(--vert); font-size: 16px; }
+
+/* ---------- Titres de section ---------- */
+.club-titre {
+  font-size: clamp(26px, 3vw, 38px);
+  text-align: center;
+  margin-bottom: clamp(24px, 3vw, 40px);
+}
+
+/* ---------- Timeline des paliers ---------- */
+.club-paliers {
+  max-width: 1080px;
+  margin-inline: auto;
+  padding: clamp(36px, 5vw, 64px) clamp(16px, 3vw, 40px);
+}
+.club-paliers__grille {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(14px, 2vw, 24px);
+}
+/* fil cousu : pointillés verts + portion remplie */
+.club-paliers__fil {
+  position: absolute;
+  top: -14px;
+  left: 8%;
+  right: 8%;
+  border-top: 2px dashed var(--gris-ligne);
+}
+.club-paliers__fil-plein {
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 62%;            /* 230 pts ≈ avancement global */
+  border-top: 2px dashed var(--vert);
+}
+
+.club-palier {
+  position: relative;
+  background: var(--blanc);
+  border: 1px solid var(--gris-ligne);
+  border-radius: var(--radius-carte);
+  padding: 22px 20px 24px;
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+  transition: box-shadow var(--transition);
+}
+.club-palier:hover { box-shadow: 0 10px 30px rgb(27 77 62 / .10); }
+/* surpiqûre verte sur les paliers débloqués */
+.club-palier.est-debloque { border-color: var(--vert); }
+.club-palier.est-debloque::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 1.5px dashed rgb(27 77 62 / .35);
+  border-radius: 7px;
+  pointer-events: none;
+}
+.club-palier.est-actuel { box-shadow: 0 14px 34px rgb(27 77 62 / .14); }
+.club-palier.est-verrouille { opacity: .82; }
+
+.club-palier__badge {
+  position: absolute;
+  top: -11px;
+  left: 18px;
+  background: var(--vert);
+  color: var(--blanc);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: lowercase;
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+.club-palier__etat {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: 700;
+  background: var(--vert);
+  color: var(--blanc);
+}
+.club-palier__etat svg { width: 15px; height: 15px; }
+.est-verrouille .club-palier__etat { background: var(--creme-2); color: var(--gris-texte); }
+.club-palier__num { color: var(--gris-texte); }
+.club-palier__nom { font-size: clamp(24px, 2.4vw, 32px); }
+.club-palier__cadeau {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  background: var(--creme);
+  border-radius: 8px;
+  padding: 18px 0;
+  color: var(--vert);
+}
+.est-verrouille .club-palier__cadeau { color: var(--gris-texte); }
+.club-palier__cadeau svg { width: 54px; height: 54px; }
+.club-palier__gain { font-weight: 600; font-size: 15px; }
+.club-palier__avantages { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+.club-palier__avantages li {
+  font-size: 13.5px;
+  color: var(--gris-texte);
+  padding-left: 16px;
+  position: relative;
+}
+.club-palier__avantages li::before { content: "—"; position: absolute; left: 0; color: var(--vert); }
+
+.club-palier__progression { width: 100%; display: grid; gap: 6px; padding-top: 4px; }
+.club-palier__progression small { font-size: 12px; color: var(--gris-texte); }
+.club-palier__jauge {
+  display: block;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--creme-2);
+  overflow: hidden;
+}
+.club-palier__jauge span {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+  background: repeating-linear-gradient(90deg, var(--vert) 0 6px, #2A6B56 6px 12px);
+}
+
+@media (max-width: 860px) {
+  .club-paliers__grille { grid-template-columns: 1fr; gap: 26px; }
+  .club-paliers__fil { display: none; }
+}
+
+/* ---------- Gagne des points ---------- */
+.club-points { max-width: 1080px; margin-inline: auto; padding: 0 clamp(16px, 3vw, 40px) clamp(36px, 5vw, 64px); }
+.club-points__grille {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(10px, 1.5vw, 18px);
+}
+.club-point {
+  border: 1.5px dashed rgb(27 77 62 / .4);   /* surpiqûre */
+  border-radius: var(--radius-carte);
+  padding: 20px 16px;
+  text-align: center;
+  display: grid;
+  gap: 4px;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.club-point:hover { border-color: var(--vert); box-shadow: 0 8px 22px rgb(27 77 62 / .08); }
+.club-point strong { font-size: clamp(18px, 1.8vw, 24px); color: var(--vert); letter-spacing: -.01em; }
+.club-point span { font-size: 13px; color: var(--gris-texte); }
+@media (max-width: 860px) { .club-points__grille { grid-template-columns: repeat(2, 1fr); } }
+
+/* ---------- Challenge UGC ---------- */
+.club-challenge {
+  background:
+    var(--motif-rr),
+    linear-gradient(150deg, #226350 0%, var(--vert) 50%, var(--vert-fonce) 100%);
+  color: var(--blanc);
+  border-radius: var(--radius-carte);
+  margin: 0 clamp(12px, 1.5vw, 20px) clamp(40px, 5vw, 72px);
+  padding: clamp(40px, 6vw, 80px) clamp(20px, 4vw, 64px);
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+.club-challenge__contenu { display: grid; justify-items: center; gap: 14px; max-width: 540px; }
+.club-challenge__sur { color: rgb(255 255 255 / .65); }
+.club-challenge__titre { font-size: clamp(28px, 4vw, 48px); }
+.club-challenge__texte { font-size: 14.5px; line-height: 1.65; color: rgb(255 255 255 / .88); }
+
+/* ---------- CTA non-membre ---------- */
+.club-cta {
+  text-align: center;
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  padding: 0 16px clamp(48px, 6vw, 80px);
+  font-size: 15px;
+}
+/* surpiqûre verte au survol du bouton, clin d'œil à la D.A. d'origine */
+.club-cta__btn { position: relative; }
+.club-cta__btn::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border: 1.5px dashed var(--vert);
+  border-radius: 999px;
+  opacity: 0;
+  transition: opacity var(--transition);
+  pointer-events: none;
+}
+.club-cta__btn:hover { background: var(--vert); border-color: var(--vert); }
+.club-cta__btn:hover::after { opacity: 1; }
