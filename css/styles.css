@@ -376,6 +376,7 @@ a.menu__produit:hover { box-shadow: 0 6px 20px rgb(0 0 0 / .08); }
 .menu__vignette--wetlift   { background-image: url("../public/assets/images/salt-wetlift.png"); }
 .menu__vignette--primer    { background-image: url("../public/assets/images/primer-packshot.png"); }
 .menu__vignette--saltkit   { background-image: url("../public/assets/aftersun-video.png"); }
+.menu__vignette--all       { background: linear-gradient(135deg, rgba(107,66,38,.12), rgba(20,20,20,.08)); }
 .menu__vignette--sport     { background-image: url("../public/assets/assets/pilates.jpg"); }
 .menu__vignette--focus     { background-image: url("../public/assets/assets/entrepreneur.jpg"); }
 .menu__vignette--modulash  { background-image: url("../public/assets/images/build-serum.png"); }
@@ -399,7 +400,10 @@ a.menu__produit:hover { box-shadow: 0 6px 20px rgb(0 0 0 / .08); }
   .menu {
     left: 10px;
     right: 10px;
+    max-width: calc(100vw - 20px);
+    width: auto;
     height: calc(100dvh - 88px);
+    overflow-x: hidden;
     overflow-y: auto;
     padding: 18px 14px 70px;
     border-top: none;
@@ -415,6 +419,7 @@ a.menu__produit:hover { box-shadow: 0 6px 20px rgb(0 0 0 / .08); }
   /* Mobile menu header and quick links */
   .menu__mobile-header {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
@@ -426,7 +431,18 @@ a.menu__produit:hover { box-shadow: 0 6px 20px rgb(0 0 0 / .08); }
     z-index: 60;
   }
   .menu__mobile-logo { font-weight: 700; font-size: 20px; text-transform: lowercase; }
-  .menu__mobile-actions { display: flex; align-items: center; gap: 10px; }
+  .menu__mobile-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    justify-content: flex-end;
+  }
+  .menu__mobile-actions a.label,
+  .menu__mobile-actions .menu__close {
+    min-width: 0;
+  }
   .menu__mobile-actions a.label { font-size: 12px; padding: 6px 8px; }
   .menu__close {
     display: inline-grid;
@@ -451,11 +467,15 @@ a.menu__produit:hover { box-shadow: 0 6px 20px rgb(0 0 0 / .08); }
     font-weight: 700;
     color: var(--noir);
     box-shadow: 0 6px 18px rgb(0 0 0 / .06);
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   /* Onglets plus grands, réf. frame menu */
-  .menu__onglet { font-size: 14px; letter-spacing: .06em; }
-  .menu__onglets { gap: 24px; }
+  .menu__onglet { font-size: 14px; letter-spacing: .06em; min-width: 0; }
+  .menu__onglets { display: flex; flex-wrap: wrap; gap: 14px; }
 
   /* Rows blanches hautes, badge en haut à droite */
   .menu__panneau { grid-template-columns: 1fr; gap: 14px; }
@@ -965,6 +985,10 @@ a.menu__produit:hover { box-shadow: 0 6px 20px rgb(0 0 0 / .08); }
   body.menu-ouvert .entete { padding-inline: 10px; }
   body.menu-ouvert .header { border-radius: 22px 22px 0 0; }
 
+  /* Pages sans hero (boutique…) : header crème classique */
+  body.page-boutique .header { background: var(--creme); color: var(--noir); }
+  body.page-boutique .annonce { margin-bottom: 0; }
+
   /* Hero : carte arrondie inset, glissée sous le header transparent */
   .hero {
     margin: -62px 10px 0;
@@ -978,4 +1002,459 @@ a.menu__produit:hover { box-shadow: 0 6px 20px rgb(0 0 0 / .08); }
 
   /* Les autres cartes de section s'alignent sur la marge 10px */
   .bandeau, .ugc, .mission { margin-inline: 10px; }
+}
+
+/* ============================================================
+   BOUTIQUE (collection.html) — réf. mockup Lashify « TOUT MAGASINER »
+   ============================================================ */
+.boutique {
+  max-width: var(--conteneur);
+  margin-inline: auto;
+  padding: clamp(20px, 3vw, 40px) clamp(16px, 3vw, 40px) clamp(48px, 6vw, 88px);
+}
+
+.boutique__titre {
+  font-size: clamp(34px, 5vw, 56px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -.02em;
+  line-height: 1;
+  margin-bottom: 14px;
+}
+.boutique__intro {
+  font-size: 16px;
+  line-height: 1.55;
+  max-width: 560px;
+  margin-bottom: 26px;
+}
+.boutique__intro a { text-decoration: underline; text-underline-offset: 3px; }
+
+/* Segments pill, réf. ESSENTIALS / VIBE / COLLECTIONS */
+.segments {
+  display: flex;
+  gap: 4px;
+  background: var(--blanc);
+  border-radius: 14px;
+  padding: 6px;
+  box-shadow: 0 4px 16px rgb(0 0 0 / .06);
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin-bottom: 26px;
+}
+.segments::-webkit-scrollbar { display: none; }
+.segments__pill {
+  flex: none;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--noir);
+  transition: background var(--transition), color var(--transition);
+}
+.segments__pill.est-actif { background: var(--noir); color: var(--blanc); }
+.segments__pill:not(.est-actif):hover { background: var(--creme-2); }
+
+/* Catégories — taille verrouillée : carrés strictement identiques */
+.categories {
+  --cat-taille: clamp(140px, 28vw, 190px);   /* côté unique pour les 3 visuels */
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: var(--cat-taille);
+  justify-content: start;
+  align-items: start;
+  gap: clamp(12px, 2vw, 20px);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  margin-bottom: 26px;
+}
+.categories::-webkit-scrollbar { display: none; }
+.categorie {
+  scroll-snap-align: start;
+  display: grid;
+  grid-template-rows: var(--cat-taille) auto;  /* visuel puis nom : même gabarit partout */
+  gap: 10px;
+  text-align: center;
+}
+.categorie__visuel {
+  width: var(--cat-taille);
+  height: var(--cat-taille);   /* carré garanti, indépendant du contenu */
+  border-radius: 6px;
+  background-color: var(--blanc);
+  background-position: center;
+  background-size: cover;
+  transition: transform .4s cubic-bezier(.4,0,.2,1);
+}
+.categorie:hover .categorie__visuel { transform: translateY(-4px); }
+.categorie__visuel--cils   { background-image: url("../public/assets/wetlift-product.png"); }
+.categorie__visuel--kits   { background-image: url("../public/assets/aftersun-video.png"); }
+.categorie__visuel--outils { background-image: url("../public/assets/modulash.png"); }
+.categorie__nom {
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.3;
+  min-height: 2.6em;   /* 2 lignes réservées : tous les noms partent du même haut */
+}
+
+/* Filtrer / Comparer — compacts */
+.outils {
+  display: flex;
+  gap: 10px;
+  background: var(--blanc);
+  border-radius: 6px;
+  padding: 8px;
+  box-shadow: 0 2px 12px rgb(0 0 0 / .05);
+  margin-bottom: clamp(24px, 3vw, 40px);
+}
+.outils__filtrer,
+.outils__comparer {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  border-radius: 3px;
+  transition: opacity var(--transition);
+}
+.outils__filtrer:hover, .outils__comparer:hover { opacity: .75; }
+.outils__filtrer { background: var(--noir); color: var(--blanc); }
+.outils__comparer { background: var(--blanc); border: 1.5px solid var(--noir); }
+.outils__filtrer svg, .outils__comparer svg { width: 17px; height: 17px; }
+
+/* Desktop : barre ajustée au contenu, pas pleine largeur */
+@media (min-width: 861px) {
+  .outils { width: max-content; }
+  .outils__filtrer, .outils__comparer { flex: none; padding: 11px 26px; }
+}
+
+/* Grille produits, réf. cards Gemini */
+.grille {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(20px, 4vw, 44px) clamp(14px, 2vw, 24px);
+}
+@media (min-width: 861px) { .grille { grid-template-columns: repeat(4, 1fr); } }
+
+.produit { position: relative; display: grid; align-content: start; gap: 4px; }
+.produit__badge {
+  position: absolute;
+  top: -10px;
+  right: 0;
+  z-index: 1;
+  background: var(--blanc);
+  border: 1px solid var(--gris-ligne);
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  padding: 5px 10px;
+}
+.produit__media { display: block; margin-bottom: 10px; }
+.produit__photo {
+  display: block;
+  aspect-ratio: 1;
+  background-position: center;
+  background-size: cover;
+  border-radius: 4px;
+  transition: transform .4s cubic-bezier(.4,0,.2,1);
+}
+.produit__media:hover .produit__photo { transform: scale(1.02); }
+/* jauge de carrousel sous l'image, réf. mockup */
+.produit__jauge {
+  display: block;
+  height: 4px;
+  background: var(--gris-ligne);
+  border-radius: 2px;
+  margin-top: 4px;
+  overflow: hidden;
+}
+.produit__jauge span { display: block; width: 30%; height: 100%; background: var(--gris-texte); border-radius: 2px; }
+
+.produit__nom { font-size: clamp(18px, 1.6vw, 22px); font-weight: 700; }
+.produit__type { font-size: 14.5px; color: #3F3E3A; }
+
+.produit__prix {
+  display: flex;
+  align-items: stretch;
+  gap: 14px;
+  padding: 10px 0 6px;
+}
+.produit__prix-bloc {
+  display: grid;
+  gap: 0;
+  font-size: 12.5px;
+  line-height: 1.35;
+}
+.produit__prix-bloc small { font-size: 12.5px; }
+.produit__prix-bloc strong { font-size: clamp(17px, 1.5vw, 20px); letter-spacing: -.01em; }
+.produit__prix-bloc span { color: var(--gris-texte); }
+.produit__prix-bloc--barre { border-left: 1px solid var(--gris-ligne); padding-left: 14px; align-content: end; }
+.produit__prix-bloc--barre strong { color: var(--gris-texte); }
+
+.produit__variantes { font-size: 13px; padding-top: 6px; }
+.produit__pastilles { display: flex; gap: 8px; padding: 6px 0; }
+.produit__pastilles .pastille { width: 26px; height: 26px; }
+/* pastille épuisée : barrée en diagonale */
+.pastille.est-epuise { position: relative; opacity: .9; cursor: not-allowed; }
+.pastille.est-epuise::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  background: linear-gradient(135deg, transparent 46%, var(--creme) 46%, var(--creme) 54%, transparent 54%);
+  border-radius: 50%;
+}
+
+.produit__chips { display: flex; gap: 8px; padding: 4px 0 10px; flex-wrap: wrap; }
+.chip {
+  padding: 9px 13px;
+  font-size: 13px;
+  background: var(--creme-2);
+  border: 1.5px solid transparent;
+  border-radius: 3px;
+  transition: border-color var(--transition), background var(--transition);
+}
+.chip:hover { background: var(--blanc); }
+.chip.est-actif { background: var(--blanc); border-color: var(--noir); font-weight: 600; }
+
+.produit__cta {
+  display: block;
+  background: var(--noir);
+  color: var(--blanc);
+  text-align: center;
+  padding: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  border-radius: 3px;
+  transition: background var(--transition);
+}
+.produit__cta:hover { background: var(--brun); }
+
+/* ============================================================
+   FICHE PRODUIT (produit.html) — réf. mockup Lashify AMPLIFY
+   ============================================================ */
+.page-fiche { background: var(--blanc); padding-bottom: 120px; }
+
+.fiche-barre {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--creme-2);
+  padding: 18px clamp(16px, 3vw, 40px);
+}
+.fiche-barre__titre {
+  font-size: clamp(15px, 2vw, 19px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+  line-height: 1.2;
+}
+.fiche-barre__fermer { flex: none; width: 26px; height: 26px; transition: opacity var(--transition); }
+.fiche-barre__fermer:hover { opacity: .55; }
+
+.fiche { max-width: 760px; margin-inline: auto; }
+
+/* Carrousel photos + points */
+.fiche__carrousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.fiche__carrousel::-webkit-scrollbar { display: none; }
+.fiche__slide {
+  flex: 0 0 100%;
+  aspect-ratio: 1 / 1.05;
+  scroll-snap-align: center;
+  background-position: center;
+  background-size: cover;
+}
+.fiche__points {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: max-content;
+  margin: -34px auto 0;
+  position: relative;
+  z-index: 1;
+  background: rgb(245 244 239 / .92);
+  border-radius: 999px;
+  padding: 9px 16px;
+}
+.fiche__points span {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--gris-texte);
+  transition: width .3s cubic-bezier(.4,0,.2,1), background .3s;
+}
+.fiche__points span.est-actif { width: 34px; background: #4A4A45; }
+
+/* Sections type STYLE / COULEUR */
+.fiche__section { padding: 22px clamp(16px, 4vw, 32px) 0; }
+.fiche__label {
+  font-size: 17px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  margin-bottom: 6px;
+}
+.fiche__desc { font-size: 15.5px; line-height: 1.5; margin-bottom: 14px; }
+.fiche__chip {
+  display: inline-block;
+  background: var(--noir);
+  color: var(--blanc);
+  font-size: 14px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 12px 22px;
+}
+.fiche__nuancier { display: flex; gap: 14px; padding: 4px 0 8px; }
+.fiche__nuancier .pastille { width: 44px; height: 44px; border-color: var(--blanc); }
+
+/* Formules, réf. Subscription Box $18 */
+.formule {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1.5px solid var(--gris-ligne);
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.formule input { position: absolute; opacity: 0; pointer-events: none; }
+.formule__coche {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  color: var(--blanc);
+  background: var(--gris-ligne);
+  transition: background var(--transition);
+}
+.formule__nom { font-size: 17px; font-weight: 600; display: grid; }
+.formule__nom small { font-size: 13px; font-weight: 400; color: var(--gris-texte); }
+.formule__prix { margin-left: auto; display: grid; justify-items: end; line-height: 1.2; }
+.formule__prix s { color: var(--gris-texte); font-size: 14px; }
+.formule__prix strong { font-size: 21px; }
+.formule:has(input:checked) { border-color: var(--brun); box-shadow: 0 0 0 1px var(--brun); }
+.formule:has(input:checked) .formule__coche { background: var(--brun); }
+
+/* Bandeau Reveal Box */
+.boxinfo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--creme);
+  border: 1px solid var(--gris-ligne);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 15px;
+  line-height: 1.35;
+}
+.boxinfo__picto {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  background: var(--noir);
+  color: var(--blanc);
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 10px;
+  rotate: -8deg;
+}
+.boxinfo strong { color: var(--brun); }
+.boxinfo small { font-size: 13.5px; }
+
+/* Longueurs, réf. rows ADD / SOLD OUT */
+.fiche__section--longueurs { display: grid; gap: 12px; padding-bottom: 8px; }
+.longueur {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid var(--gris-ligne);
+  background: var(--blanc);
+  padding: 12px 14px;
+}
+.longueur__vignette {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+}
+.longueur__nom { display: grid; line-height: 1.25; }
+.longueur__nom strong { font-size: 19px; }
+.longueur__nom small { font-size: 15px; color: #3F3E3A; }
+.longueur__add {
+  margin-left: auto;
+  background: var(--noir);
+  color: var(--blanc);
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  padding: 16px 30px;
+  transition: background var(--transition), transform .15s;
+}
+.longueur__add:not(:disabled):hover { background: var(--brun); }
+.longueur__add:not(:disabled):active { transform: scale(.96); }
+.longueur__add.est-epuise {
+  background: var(--creme-2);
+  color: #B5B3AB;
+  cursor: not-allowed;
+}
+
+/* Barre totale sticky */
+.fiche-total {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  background: var(--blanc);
+  border-top: 1px solid var(--gris-ligne);
+  padding: 10px clamp(16px, 4vw, 32px) 14px;
+  box-shadow: 0 -8px 24px rgb(0 0 0 / .06);
+}
+.fiche-total .boxinfo--compact { border: 0; background: transparent; padding: 4px 0; }
+.fiche-total__ligne {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 17px;
+  font-weight: 700;
+}
+.fiche-total__ligne strong { font-size: 20px; }
+@media (min-width: 761px) {
+  .fiche-total { max-width: 760px; margin-inline: auto; left: 50%; translate: -50%; border-radius: 14px 14px 0 0; border: 1px solid var(--gris-ligne); border-bottom: 0; }
+}
+
+/* Boutique mobile : chips compactes sur grille 2 colonnes */
+@media (max-width: 600px) {
+  .chip { padding: 7px 8px; font-size: 11.5px; }
+  .produit__chips { gap: 5px; flex-wrap: nowrap; }
+  .produit__prix { gap: 10px; }
+  .produit__prix-bloc--barre { padding-left: 10px; }
 }

@@ -27,6 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initUgc();
   initAccordeons();
   initLogoGeant();
+  initBoutique();
+  initFiche();
 });
 
 function initHeader() {
@@ -172,4 +174,80 @@ function initLogoGeant() {
     });
   }, { threshold: 0.4 });
   observeur.observe(logo);
+}
+
+// ------------------------------------------------------------
+// Boutique : segments + pastilles/chips sélectionnables
+// ------------------------------------------------------------
+function initBoutique() {
+  const segments = [...document.querySelectorAll("[data-segment]")];
+  segments.forEach((seg) => {
+    seg.addEventListener("click", () => {
+      segments.forEach((s) => {
+        s.classList.toggle("est-actif", s === seg);
+        s.setAttribute("aria-selected", s === seg);
+      });
+    });
+  });
+
+  // pastilles Hair Match™ des cards (sélection visuelle)
+  document.querySelectorAll("[data-hairmatch]").forEach((groupe) => {
+    const pastilles = [...groupe.querySelectorAll(".pastille:not(.est-epuise)")];
+    pastilles.forEach((p) => p.addEventListener("click", () =>
+      pastilles.forEach((x) => x.classList.toggle("est-active", x === p))));
+  });
+
+  // chips longueurs des cards
+  document.querySelectorAll(".produit__chips").forEach((groupe) => {
+    const chips = [...groupe.querySelectorAll(".chip")];
+    chips.forEach((c) => c.addEventListener("click", () =>
+      chips.forEach((x) => x.classList.toggle("est-actif", x === c))));
+  });
+}
+
+// ------------------------------------------------------------
+// Fiche produit : carrousel points, nuancier, Reveal Box™
+// ------------------------------------------------------------
+function initFiche() {
+  const fiche = document.querySelector("[data-fiche]");
+  if (!fiche) return;
+
+  // Carrousel : point actif suit le scroll
+  const carrousel = document.querySelector("[data-fiche-carrousel]");
+  const points = [...document.querySelectorAll("[data-fiche-points] span")];
+  carrousel?.addEventListener("scroll", () => {
+    const i = Math.round(carrousel.scrollLeft / carrousel.clientWidth);
+    points.forEach((pt, j) => pt.classList.toggle("est-actif", j === i));
+  }, { passive: true });
+
+  // Nuancier Hair Match™ : met à jour le libellé COULEUR
+  const libelleCouleur = document.querySelector("[data-fiche-couleur]");
+  const nuances = [...document.querySelectorAll("[data-fiche-nuancier] .pastille")];
+  nuances.forEach((n) => {
+    n.addEventListener("click", () => {
+      nuances.forEach((x) => x.classList.toggle("est-active", x === n));
+      if (libelleCouleur) libelleCouleur.textContent = n.dataset.couleur;
+    });
+  });
+
+  // Reveal Box™ : ajouts → compteurs + total (-50% à partir de 5 articles)
+  const OBJECTIF = 5;
+  let articles = 0;
+  let total = 0;
+  const majCompteurs = () => {
+    document.querySelectorAll("[data-fiche-compte]").forEach((el) => el.textContent = articles);
+    document.querySelectorAll("[data-fiche-restant]").forEach((el) => el.textContent = Math.max(0, OBJECTIF - articles));
+    const reduit = articles >= OBJECTIF ? total / 2 : total;
+    const elTotal = document.querySelector("[data-fiche-total]");
+    if (elTotal) elTotal.textContent = `€${reduit.toFixed(2).replace(".", ",").replace(",00", "")}`;
+  };
+  document.querySelectorAll(".longueur__add:not(.est-epuise)").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      articles += 1;
+      total += Number(btn.dataset.prix || 0);
+      btn.textContent = "Ajouté ✓";
+      setTimeout(() => { btn.textContent = "Ajouter"; }, 1200);
+      majCompteurs();
+    });
+  });
 }
