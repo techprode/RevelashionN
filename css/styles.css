@@ -1486,18 +1486,17 @@ a.menu__produit:hover { box-shadow: 0 6px 20px rgb(0 0 0 / .08); }
     linear-gradient(165deg, #226350 0%, var(--vert) 45%, var(--vert-fonce) 100%);
   color: var(--blanc);
   text-align: center;
-  padding: clamp(40px, 6vw, 72px) 20px 0;
+  padding: clamp(40px, 6vw, 72px) 20px clamp(44px, 6vw, 76px);
 }
 .club-hero__sur { color: rgb(255 255 255 / .65); margin-bottom: 10px; }
 .club-hero__titre { font-size: clamp(38px, 6vw, 72px); }
 
-/* écrin : la carte déborde du hero sur le blanc */
+/* la carte est posée sur le fond blanc, sous le hero */
 .club-carte-zone {
   display: grid;
   justify-content: center;
-  padding-top: clamp(28px, 4vw, 48px);
-  margin-bottom: calc(-1 * clamp(70px, 11vw, 130px));
-  transform: translateY(clamp(0px, 1vw, 10px));
+  padding: clamp(36px, 5vw, 56px) 20px 6px;
+  background: var(--blanc);
 }
 
 /* ---------- Carte de fidélité noire 3D ---------- */
@@ -1520,7 +1519,7 @@ a.menu__produit:hover { box-shadow: 0 6px 20px rgb(0 0 0 / .08); }
   /* noir mat : fond quasi uniforme, sans reflet brillant */
   background: linear-gradient(160deg, #1A1A1A 0%, #121212 55%, #0E0E0E 100%);
   box-shadow:
-    0 30px 60px rgb(10 26 20 / .45),
+    0 26px 52px rgb(0 0 0 / .28),
     inset 0 1px 0 rgb(255 255 255 / .05);
   transform-style: preserve-3d;
   transition: transform .18s ease-out;
@@ -1593,7 +1592,7 @@ a.menu__produit:hover { box-shadow: 0 6px 20px rgb(0 0 0 / .08); }
   text-align: center;
   font-size: 14.5px;
   color: var(--gris-texte);
-  padding: clamp(86px, 13vw, 150px) 16px 8px;
+  padding: 20px 16px 8px;
 }
 .club-membre strong { color: var(--vert); font-size: 16px; }
 
@@ -1606,10 +1605,15 @@ a.menu__produit:hover { box-shadow: 0 6px 20px rgb(0 0 0 / .08); }
 
 /* ---------- Timeline des paliers ---------- */
 .club-paliers {
-  max-width: 1080px;
-  margin-inline: auto;
+  background:
+    var(--motif-rr),
+    linear-gradient(160deg, #226350 0%, var(--vert) 50%, var(--vert-fonce) 100%);
+  border-radius: var(--radius-carte);
+  margin: clamp(28px, 4vw, 44px) clamp(12px, 1.5vw, 20px) clamp(40px, 5vw, 72px);
   padding: clamp(36px, 5vw, 64px) clamp(16px, 3vw, 40px);
 }
+.club-paliers .club-titre { color: var(--blanc); }
+.club-paliers__grille { max-width: 1000px; margin-inline: auto; }
 .club-paliers__grille {
   position: relative;
   display: grid;
@@ -1622,14 +1626,14 @@ a.menu__produit:hover { box-shadow: 0 6px 20px rgb(0 0 0 / .08); }
   top: -14px;
   left: 8%;
   right: 8%;
-  border-top: 2px dashed var(--gris-ligne);
+  border-top: 2px dashed rgb(255 255 255 / .3);
 }
 .club-paliers__fil-plein {
   position: absolute;
   top: -2px;
   left: 0;
   width: 62%;            /* 230 pts ≈ avancement global */
-  border-top: 2px dashed var(--vert);
+  border-top: 2px dashed #EAF2ED;
 }
 
 .club-palier {
@@ -1655,7 +1659,8 @@ a.menu__produit:hover { box-shadow: 0 6px 20px rgb(0 0 0 / .08); }
   pointer-events: none;
 }
 .club-palier.est-actuel { box-shadow: 0 14px 34px rgb(27 77 62 / .14); }
-.club-palier.est-verrouille { opacity: .82; }
+.club-palier.est-verrouille .club-palier__nom,
+.club-palier.est-verrouille .club-palier__gain { color: var(--gris-texte); }
 
 .club-palier__badge {
   position: absolute;
@@ -1692,6 +1697,39 @@ a.menu__produit:hover { box-shadow: 0 6px 20px rgb(0 0 0 / .08); }
   border-radius: 8px;
   padding: 18px 0;
   color: var(--vert);
+}
+.club-palier__carte {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  gap: 10px;
+  background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(244,240,232,.9));
+  border-radius: 18px;
+  padding: 18px 0;
+}
+.club-palier__carte-rr {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  background: var(--vert);
+  color: var(--blanc);
+  font-weight: 800;
+  font-size: 24px;
+  letter-spacing: .16em;
+  border-radius: 18px;
+}
+.club-palier__carte-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  color: var(--gris-texte);
+}
+.club-palier__image {
+  display: block;
+  width: min(120px, 100%);
+  height: auto;
+  object-fit: contain;
 }
 .est-verrouille .club-palier__cadeau { color: var(--gris-texte); }
 .club-palier__cadeau svg { width: 54px; height: 54px; }
